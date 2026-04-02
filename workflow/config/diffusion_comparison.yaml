@@ -1,0 +1,18 @@
+project_name: pairton
+
+output_dir: /home/users/h/hermanse/scratch/pairton/diffusion_ablation/
+package_dir: /home/users/h/hermanse/workspace/pairton/
+
+data_config_name: sequence_hyper
+model_config_name: pairformer
+trainer_config_name: default_trainer
+
+train_command: pairton fit
+validate_command: pairton validate
+test_command: pairton test
+
+
+metric_name: val/event_full_diffusion_tpr
+mode: max
+
+seed: 2025

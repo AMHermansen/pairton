@@ -1,0 +1,27 @@
+class_path: combinatorics.models.general.general.GeneralSequenceModel
+init_args:
+  in_features: 6
+  sequence_model:
+    class_path: combinatorics.models.general.PairFormerWrapper
+    init_args:
+      dim_single: 128
+      dim_pair: 64
+      config:
+        num_layers: 12
+        block_config:
+          use_pre_mlp_norm: true
+  lightning_config:
+    optimizer_class: torch.optim.AdamW
+    optimizer_kwargs:
+      lr: 0.001
+      betas:
+        - 0.9
+        - 0.95
+      weight_decay: 0.01
+    scheduler_class: combinatorics.utils.LinearWarmupCosineDecay
+    scheduler_kwargs:
+      warmup_steps: 20000
+      total_steps: 800000
+    scheduler_config:
+      interval: step
+      frequency: 1

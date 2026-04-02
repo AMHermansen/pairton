@@ -1,0 +1,49 @@
+data_paths:
+  train_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_train.h5
+  val: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_val.h5
+  test_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_test.h5
+data_loader_config:
+  batch_size: 256
+  num_workers: 8
+  shuffle: true
+  drop_last: true
+  pin_memory: false
+  prefetch_factor: 4
+  length_splits:
+    - 6
+    - 7
+    - 8
+    - 9
+validation_override:
+  shuffle: false
+  drop_last: false
+dataset_factory:
+  class_path: combinatorics.data.datasets.HyperDatasetFactory
+  init_args:
+    config:
+      features:
+        - class_path: combinatorics.data.transforms.ScaledLogTransform
+          init_args:
+            in_feature_name: jet_e
+            scale: 1.0
+            offset: 4.5
+        - class_path: combinatorics.data.transforms.ScaledLogTransform
+          init_args:
+            in_feature_name: jet_pt
+            scale: 1.0
+            offset: 4.5
+        - class_path: combinatorics.data.transforms.IdentityTransform
+          init_args:
+            in_feature_name: jet_eta
+        - class_path: combinatorics.data.transforms.CosTransform
+          init_args:
+            in_feature_name: jet_phi
+        - class_path: combinatorics.data.transforms.SinTransform
+          init_args:
+            in_feature_name: jet_phi
+        - class_path: combinatorics.data.transforms.IdentityTransform
+          init_args:
+            in_feature_name: jet_bTag
+      matchability_criteria: 0
+      max_mask_level: 2
+      use_masking: false

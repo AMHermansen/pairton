@@ -1,0 +1,5 @@
+precision: 16-mixed
+accelerator: auto
+devices: 1
+max_epochs: 100
+gradient_clip_val: 1.0

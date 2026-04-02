@@ -1,0 +1,105 @@
+# lightning.pytorch==2.5.5
+seed_everything: 2026
+trainer:
+  accelerator: auto
+  strategy: auto
+  devices: 1
+  num_nodes: 1
+  precision: 16-mixed
+  fast_dev_run: false
+  max_epochs: 100
+  min_epochs: null
+  max_steps: -1
+  min_steps: null
+  max_time: null
+  limit_train_batches: null
+  limit_val_batches: null
+  limit_test_batches: null
+  limit_predict_batches: null
+  overfit_batches: 0.0
+  val_check_interval: null
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: null
+  log_every_n_steps: null
+  enable_checkpointing: null
+  enable_progress_bar: null
+  enable_model_summary: null
+  accumulate_grad_batches: 1
+  gradient_clip_val: 1.0
+  gradient_clip_algorithm: null
+  deterministic: null
+  benchmark: null
+  inference_mode: true
+  use_distributed_sampler: true
+  profiler: null
+  detect_anomaly: false
+  barebones: false
+  plugins: null
+  sync_batchnorm: false
+  reload_dataloaders_every_n_epochs: 0
+  default_root_dir: null
+  model_registry: null
+
+data:
+  data_paths:
+    train_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_train.h5
+    val: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_val.h5
+    test_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_test.h5
+    predict_path: null
+  data_loader_config:
+    batch_size: 256
+    num_workers: 8
+    shuffle: true
+    drop_last: true
+    pin_memory: false
+    prefetch_factor: 4
+    length_splits:
+      - 6
+      - 7
+      - 8
+      - 9
+  validation_override:
+    shuffle: false
+    drop_last: false
+  dataset_factory:
+    class_path: combinatorics.data.datasets.HyperDatasetFactory
+    init_args:
+      config:
+        features:
+          - class_path: combinatorics.data.transforms.ScaledLogTransform
+            init_args:
+              in_feature_name: jet_e
+              scale: 1.0
+              offset: 4.5
+              epsilon: 1.0e-10
+          - class_path: combinatorics.data.transforms.ScaledLogTransform
+            init_args:
+              in_feature_name: jet_pt
+              scale: 1.0
+              offset: 4.5
+              epsilon: 1.0e-10
+          - class_path: combinatorics.data.transforms.IdentityTransform
+            init_args:
+              in_feature_name: jet_eta
+          - class_path: combinatorics.data.transforms.CosTransform
+            init_args:
+              in_feature_name: jet_phi
+          - class_path: combinatorics.data.transforms.SinTransform
+            init_args:
+              in_feature_name: jet_phi
+          - class_path: combinatorics.data.transforms.IdentityTransform
+            init_args:
+              in_feature_name: jet_bTag
+        structure:
+          feature_key: jets
+          matchability_key: matchability
+          njet_count_key: njet
+          nbjet_count_key: nbjet
+          truthmatch_key: jet_match
+        num_jet_range: null
+        num_bjet_range: null
+        matchability_criteria: 63
+        chunk_size: 100000
+        pad_length: 20
+optimizer: null
+lr_scheduler: null

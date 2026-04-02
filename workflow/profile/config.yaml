@@ -1,0 +1,16 @@
+verbose: true
+printshellcmds: true
+jobs: 12 # Maximum number of jobs to run in parallel
+
+executor: slurm
+default-resources:
+  slurm_account: golling
+  slurm_partition: private-dpnc-gpu,shared-gpu
+  runtime: 1440 # minutes (24 hours)
+  mem_mb: 16_000
+  threads: 1
+  cpus_per_task: 8
+  constraint: COMPUTE_TYPE_AMPERE
+  gpu: 1
+
+sdm: env-modules
