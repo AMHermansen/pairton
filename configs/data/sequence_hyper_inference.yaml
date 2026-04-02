@@ -9,11 +9,6 @@ data_loader_config:
   drop_last: true
   pin_memory: false
   prefetch_factor: 4
-  length_splits:
-    - 6
-    - 7
-    - 8
-    - 9
 validation_override:
   shuffle: false
   drop_last: false
