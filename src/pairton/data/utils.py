@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import cast, TYPE_CHECKING
 
 import jaxtyping as jx
-
+import torch as th
 from torch.utils.data import default_collate
 
 from pairton.data.types import (
@@ -15,9 +15,6 @@ from pairton.data.types import (
 )
 from pairton.data.transforms import BaseTransform
 from ml_utils.utils import exists
-
-if TYPE_CHECKING:
-    import torch as th
 
 def construct_adjacency(
     features: jx.Float[th.Tensor, "num_jets num_features"],
