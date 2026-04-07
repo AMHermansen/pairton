@@ -1,5 +1,5 @@
 data_paths:
-  train_path: //srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_train.h5
+  train_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_train.h5
   val: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_val.h5
   test_path: /srv/beegfs/scratch/users/h/hermanse/hyper/ttbar_test.h5
 data_loader_config:
@@ -18,30 +18,30 @@ validation_override:
   shuffle: false
   drop_last: false
 dataset_factory:
-  class_path: combinatorics.data.datasets.HyperDatasetFactory
+  class_path: pairton.data.factories.HyperDatasetFactory
   init_args:
     config:
       features:
-        - class_path: combinatorics.data.transforms.ScaledLogTransform
+        - class_path: pairton.data.transforms.ScaledLogTransform
           init_args:
             in_feature_name: jet_e
             scale: 1.0
             offset: 4.5
-        - class_path: combinatorics.data.transforms.ScaledLogTransform
+        - class_path: pairton.data.transforms.ScaledLogTransform
           init_args:
             in_feature_name: jet_pt
             scale: 1.0
             offset: 4.5
-        - class_path: combinatorics.data.transforms.IdentityTransform
+        - class_path: pairton.data.transforms.IdentityTransform
           init_args:
             in_feature_name: jet_eta
-        - class_path: combinatorics.data.transforms.CosTransform
+        - class_path: pairton.data.transforms.CosTransform
           init_args:
             in_feature_name: jet_phi
-        - class_path: combinatorics.data.transforms.SinTransform
+        - class_path: pairton.data.transforms.SinTransform
           init_args:
             in_feature_name: jet_phi
-        - class_path: combinatorics.data.transforms.IdentityTransform
+        - class_path: pairton.data.transforms.IdentityTransform
           init_args:
             in_feature_name: jet_bTag
       matchability_criteria: 63
