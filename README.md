@@ -17,6 +17,9 @@ and then two workflows the architecture ablation and iteration ablation studies.
 
 Data & configuration
 ---------------------
+The root files containing the data published with HyPER (https://zenodo.org/records/10653837)
+are processed with `scripts/hyper_to_h5_cli.py`.
+
 
 Configuration files live under `configs/` (for example `configs/data/sequence_hyper.yaml`).
 Some configuration files contain absolute, hardcoded dataset paths that must be adapted to your system before running the workflows.
