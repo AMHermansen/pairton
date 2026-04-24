@@ -14,7 +14,7 @@ class SequenceCLI(LightningCLI):
         This CLI is used to finetune data using the flat representation.
         """
         super().__init__(
-            model_class=LightningModule,  # combinatorics.models.base_sequence.BaseSequenceModel
+            model_class=LightningModule,
             datamodule_class=SequenceDataModule,
             save_config_callback=WandBSaveConfigCallback,
             save_config_kwargs={"overwrite": True},

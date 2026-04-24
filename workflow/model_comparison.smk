@@ -18,7 +18,7 @@ config_dir = package_dir / "configs"
 
 activate_venv_cmd = f"source {package_dir}/.venv/bin/activate"
 
-model_names = ["bias_transformer.yaml", "pairformer.yaml", "transformer.yaml"]
+model_names = ["bias_transformer.yaml", "transformer.yaml"]
 data_name = f"{config['data_config_name']}.yaml"
 data_inference_name = f"{config['data_inference_config_name']}.yaml"
 trainer_name = f"{config['trainer_config_name']}.yaml"

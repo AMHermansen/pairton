@@ -6,7 +6,7 @@ executor: slurm
 default-resources:
   slurm_account: golling
   slurm_partition: private-dpnc-gpu,shared-gpu
-  runtime: 1440 # minutes (24 hours)
+  runtime: 86400 # seconds (24 hours)
   mem_mb: 16_000
   threads: 1
   cpus_per_task: 8
