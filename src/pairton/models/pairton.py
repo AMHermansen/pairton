@@ -424,16 +424,17 @@ class Pairton(LightningModule):
                 in_features=input_pair_features,
                 out_features=self._sequence_model.dim_pair,
             )
-            if self._use_discrete_diffusion:
-                # Adjacency embeddings for discrete diffusion
-                # The 3 embeddings correspond to: no edge, edge, unknown.
-                #
-                self._t_adjacency_embedding = nn.Embedding(
-                    num_embeddings=3, embedding_dim=self._sequence_model.dim_pair // 2
-                )
-                self._w_adjacency_embedding = nn.Embedding(
-                    num_embeddings=3, embedding_dim=self._sequence_model.dim_pair // 2
-                )
+            # Adjacency embeddings for discrete diffusion. Always create these
+            # modules when pair features are present so that checkpoints trained
+            # with discrete diffusion can be loaded even if inference is run with
+            # discrete diffusion disabled.
+            # The 3 embeddings correspond to: no edge, edge, unknown.
+            self._t_adjacency_embedding = nn.Embedding(
+                num_embeddings=3, embedding_dim=self._sequence_model.dim_pair // 2
+            )
+            self._w_adjacency_embedding = nn.Embedding(
+                num_embeddings=3, embedding_dim=self._sequence_model.dim_pair // 2
+            )
         else:
             if self._use_discrete_diffusion:
                 raise ValueError(
@@ -523,6 +524,16 @@ class Pairton(LightningModule):
 
             adj_embedding = th.cat([t_adj_embedding, w_adj_embedding], dim=-1)
 
+        elif hasattr(self, "_t_adjacency_embedding") and hasattr(
+            self, "_w_adjacency_embedding"
+        ):
+            t_adj_embedding = self._t_adjacency_embedding(
+                th.ones_like(batch["adjacency"], dtype=th.int32) * 2
+            )  # full mask
+            w_adj_embedding = self._w_adjacency_embedding(
+                th.ones_like(batch["w_adjacency"], dtype=th.int32) * 2
+            )  # full mask
+            adj_embedding = th.cat([t_adj_embedding, w_adj_embedding], dim=-1)
         else:
             adj_embedding = 0
 
